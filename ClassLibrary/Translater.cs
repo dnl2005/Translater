@@ -1,6 +1,6 @@
 ﻿namespace ClassLibrary
 {
-    public class Translater
+    public static class Translater
     {
         public static string ConvertOtherToDec(string n, int nBase, int m)
         {
