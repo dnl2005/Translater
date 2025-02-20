@@ -69,7 +69,7 @@ namespace ClassLibrary
 
             if (number == "")
                 throw new Exception(noNumberInputEx);
-            if (number[0..].Count(c => c == '-')>1 || number.Count(c => c == ',')>1)
+            if (number[0..].Count(c => c == '-')>0 || number.Count(c => c == ',')>1)
                 throw new Exception(invalidNumberInputEx);
 
             for (int i = 0; i < number.Length; i++)
