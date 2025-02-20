@@ -5,14 +5,14 @@ namespace ClassLibrary
     public static class Translater
     {
         private static readonly string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//Алфавит
-        public static readonly string invalidNotationFromInputEx = "Ошибка: введены недопустимые символы в исходной системе счисления. См. справку";
-        public static readonly string invalidNotationFromValueEx = "Ошибка: введено неверное значение в исходной системе счисления. См. справку";
-        public static readonly string invalidNotationToInputEx = "Ошибка: введены недопустимые символы в конечной системе счисления. См. справку";
-        public static readonly string invalidNotationToValueEx = "Ошибка: введено неверное значение в исходной системе счисления. См. справку";
-        public static readonly string invalidAccuracyInputEx = "Ошибка: введены недопустимые символы в точности представления. См. справку";
-        public static readonly string invalidAccuracyValueEx = "Ошибка: введено недопустимое значение в точности представления. См. справку";
-        public static readonly string invalidNumberInputEx = "Ошибка: введены недопустимые значения в числе для перевода. См. справку";
-        public static readonly string DigitOutOfNotationToEx = "Ошибка: в выбранном числе присутствуют цифры вне выбранной исходной системы счисления";
+        public static readonly string invalidNotationFromInputEx = "Введены недопустимые символы в исходной системе счисления. См. справку";
+        public static readonly string invalidNotationFromValueEx = "Введено неверное значение в исходной системе счисления. См. справку";
+        public static readonly string invalidNotationToInputEx = "Введены недопустимые символы в конечной системе счисления. См. справку";
+        public static readonly string invalidNotationToValueEx = "Введено неверное значение в исходной системе счисления. См. справку";
+        public static readonly string invalidAccuracyInputEx = "Введены недопустимые символы в точности представления. См. справку";
+        public static readonly string invalidAccuracyValueEx = "Введено недопустимое значение в точности представления. См. справку";
+        public static readonly string invalidNumberInputEx = "Введены недопустимые значения в числе для перевода. См. справку";
+        public static readonly string DigitOutOfNotationToEx = "В выбранном числе присутствуют цифры вне выбранной исходной системы счисления";
 
 
         /// <summary>
