@@ -4,6 +4,7 @@ namespace ClassLibrary
 {
     public static class Translater
     {
+        private static readonly string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//Алфавит
         public static readonly string invalidNotationFromInputEx = "Ошибка: введены недопустимые символы в исходной системе счисления. См. справку";
         public static readonly string invalidNotationFromValueEx = "Ошибка: введено неверное значение в исходной системе счисления. См. справку";
         public static readonly string invalidNotationToInputEx = "Ошибка: введены недопустимые символы в конечной системе счисления. См. справку";
@@ -67,11 +68,17 @@ namespace ClassLibrary
 
             }
         }
-
+        /// <summary>
+        ///Метод перевода из иной системы счисления в десятичную 
+        /// </summary>
+        /// <param name="n">исходное число в иной системе счисления</param>
+        /// <param name="nBase">основание системы счисления из которой мы переводим</param>
+        /// <param name="m">точность, кол-во знаков после запятой</param>
+        /// <returns>возвращает число в десятичной системе счисления, тип данных - строка</returns>
         public static string ConvertOtherToDec(string n, int nBase, int m)
         {
             //Блок Инициализации
-            string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//Алфавит
+
             string result = "";//возвращаемый результат
             string[] splitNum = n.Split(',');//разделяем начальное число на целую и дробную части
 
@@ -106,9 +113,15 @@ namespace ClassLibrary
             return result;
         }
 
+        /// <summary>
+        ///Метод перевода из десятичной системы счисления в иную
+        /// </summary>
+        /// <param name="n">исходное число в десятичной системе счисления</param>
+        /// <param name="nBase">основание системы счисления в которую мы переводим</param>
+        /// <param name="m">точность, кол-во знаков после запятой</param>
+        /// <returns>возвращает число в иной системе счисления, тип данных - строка</returns>
         public static string ConvertDecToOther(string n, int newBase, int m)
         {
-            string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Алфавит
             string result = ""; // возвращаемый результат
             string[] splitNum = n.Contains(',') ? n.Split(',') : new string[] { n }; // разделяем начальное число на целую и дробную части
             double resultPrecalc = 0;
@@ -139,6 +152,47 @@ namespace ClassLibrary
             result = resultPrecalc.ToString().Replace('.', ',');//конвертируем результат и форматируем
                                                                 // возврат
             return result;
+        }
+        
+        /// <summary>
+        /// Метод связывающий методы перевода в десятичную из иной и из иной в десятичную
+        /// Создан для более удобной связи с интерфейсом
+        /// </summary>
+        /// <param name="n">начальное число с которым производим операцию</param>
+        /// <param name="nBase">начальное основание из которой переводим</param>
+        /// <param name="outBase">конечная система счисления в которую переводим</param>
+        /// <param name="m">точность, количество знаков после запятой</param>
+        /// <returns>возвращает число в конечной системе счисления, тип данных - строка</returns>
+        public static string MainTranslate(string n, int nBase, int outBase, int m)
+        {
+            string nDec;//представление числа в десятеричной сс
+            string nOther;//представление числа в конечной сс
+
+            if (nBase != 10)//проверяем чтобы начальная сс не была уже десятеричной
+            {
+                nDec = ConvertOtherToDec(n, nBase, m);//переводим из начальной сс в десятеричную
+                if (outBase != 10) //проверяем если конечная сс должна быть десятеричной, если да то просто возвращаем
+                {
+                    nOther = ConvertDecToOther(nDec, outBase, m);
+                }
+                else
+                {
+                    nOther = nDec;
+                }
+                
+            }
+            else 
+            {
+                if (outBase != 10)
+                {
+                    nOther = ConvertDecToOther(n, outBase, m);
+                }
+                else
+                {
+                    nOther = n;
+                }
+            }
+            return nOther;
         }
     }
 }
