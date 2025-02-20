@@ -125,7 +125,7 @@ namespace ClassLibrary
 
             //Обработка результата
             //обрабатываем округление, замен точки на запятую, проверяем наличие дробной части
-            double resultPrecalc = (Math.Round(double.Parse(wholeDec + (fracDec > 0 ? "." + ((fracDec * 10).ToString("")).Replace(".", "") : "")), m));
+            double resultPrecalc = Math.Round(wholeDec + fracDec, m);
             result = (isNegative ? "-" : "") + (resultPrecalc.ToString().Replace(".", ","));
 
             //возврат
@@ -152,7 +152,7 @@ namespace ClassLibrary
             double resultPrecalc = 0;
 
             int whole = Int32.Parse(splitNum[0]); // целая часть
-            double frac = n.Contains(',') ? (double.Parse(splitNum.Length > 1 ? "0." + splitNum[1] : "0")) : 0; // дробная часть, проверяем если вообще есть
+            double frac = n.Contains(',') ? (double.Parse(splitNum.Length > 1 ? "0," + splitNum[1] : "0")) : 0; // дробная часть, проверяем если вообще есть
 
             string wholeNew = ""; // переведенная целая часть
             string fracNew = ""; // переведенная дробная часть
