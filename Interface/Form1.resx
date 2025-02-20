@@ -120,9 +120,26 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>47, 19</value>
   </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>47, 19</value>
-  </metadata>
+  <data name="help.ToolTip" xml:space="preserve">
+    <value>Программа для перевода числа из системы счисления P в систему счисления Q.
+
+Обязательные параметры помечены "*":
+Исходное число
+Направления перевода (исходная и конечная системы счисления)
+
+Дополнительный параметр Точность перевода для знаков после запятой по умолчанию установлен на 3.
+Пользователь может ввести свое значение.
+
+Требования к входным данным:
+Исходная и конечная системы счисления P,Q должны быть заданы целым числом в диапазоне от 2 до 36.
+Точность должна быть задана целым числом.
+Исходное число для перевода может быть задано следующими символами в любом регистре:
+-,0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
+Пример исходного числа: -fA,32
+
+Выходные данные: 
+Число в указанной конечной системе счисления.</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>34</value>
   </metadata>

@@ -1,6 +1,6 @@
 ﻿namespace Interface
 {
-    partial class Form1
+    partial class Translater
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Translater));
             label1 = new Label();
             panel1 = new Panel();
             label2 = new Label();
@@ -44,6 +45,7 @@
             accuracy = new TextBox();
             baseToChange = new TextBox();
             changedBase = new TextBox();
+            label6 = new Label();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -51,11 +53,11 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            label1.Location = new Point(91, 210);
+            label1.Location = new Point(155, 214);
             label1.Name = "label1";
-            label1.Size = new Size(248, 45);
+            label1.Size = new Size(265, 45);
             label1.TabIndex = 0;
-            label1.Text = "Исходное число";
+            label1.Text = "Исходное число*";
             // 
             // panel1
             // 
@@ -69,9 +71,10 @@
             // 
             // label2
             // 
+            label2.BackColor = Color.FromArgb(199, 210, 242);
             label2.Dock = DockStyle.Fill;
             label2.Font = new Font("Monotype Corsiva", 28.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            label2.ForeColor = Color.Green;
+            label2.ForeColor = SystemColors.ActiveCaptionText;
             label2.Location = new Point(0, 0);
             label2.Name = "label2";
             label2.Size = new Size(1103, 133);
@@ -82,15 +85,15 @@
             // numbre
             // 
             numbre.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            numbre.Location = new Point(497, 210);
+            numbre.Location = new Point(528, 210);
             numbre.Name = "numbre";
-            numbre.Size = new Size(202, 49);
+            numbre.Size = new Size(128, 49);
             numbre.TabIndex = 2;
             // 
             // resultButton
             // 
-            resultButton.Font = new Font("Monotype Corsiva", 16.2F, FontStyle.Italic, GraphicsUnit.Point, 204);
-            resultButton.Location = new Point(497, 545);
+            resultButton.Font = new Font("Monotype Corsiva", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            resultButton.Location = new Point(392, 549);
             resultButton.Name = "resultButton";
             resultButton.Size = new Size(274, 73);
             resultButton.TabIndex = 8;
@@ -110,7 +113,7 @@
             help.TabIndex = 20;
             help.Text = "?";
             help.TextAlign = ContentAlignment.MiddleCenter;
-            toolTip1.SetToolTip(help, "svjsojvds\r\nykff");
+            toolTip1.SetToolTip(help, resources.GetString("help.ToolTip"));
             // 
             // toolTip1
             // 
@@ -123,11 +126,11 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            label3.Location = new Point(91, 326);
+            label3.Location = new Point(70, 326);
             label3.Name = "label3";
-            label3.Size = new Size(351, 45);
+            label3.Size = new Size(368, 45);
             label3.TabIndex = 21;
-            label3.Text = "Направления перевода";
+            label3.Text = "Направления перевода*";
             // 
             // label5
             // 
@@ -143,7 +146,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            label4.Location = new Point(736, 326);
+            label4.Location = new Point(694, 329);
             label4.Name = "label4";
             label4.Size = new Size(35, 45);
             label4.TabIndex = 25;
@@ -163,42 +166,53 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            label7.Location = new Point(91, 444);
+            label7.Location = new Point(70, 444);
             label7.Name = "label7";
-            label7.Size = new Size(177, 45);
+            label7.Size = new Size(406, 45);
             label7.TabIndex = 27;
-            label7.Text = "Точность";
+            label7.Text = "Точность представления";
             // 
             // accuracy
             // 
             accuracy.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            accuracy.Location = new Point(497, 440);
+            accuracy.Location = new Point(528, 440);
             accuracy.Name = "accuracy";
-            accuracy.Size = new Size(202, 49);
+            accuracy.Size = new Size(128, 49);
             accuracy.TabIndex = 28;
             // 
             // baseToChange
             // 
             baseToChange.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            baseToChange.Location = new Point(497, 326);
+            baseToChange.Location = new Point(528, 326);
             baseToChange.Name = "baseToChange";
-            baseToChange.Size = new Size(202, 49);
+            baseToChange.Size = new Size(128, 49);
             baseToChange.TabIndex = 29;
             // 
             // changedBase
             // 
             changedBase.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            changedBase.Location = new Point(812, 326);
+            changedBase.Location = new Point(788, 326);
             changedBase.Name = "changedBase";
-            changedBase.Size = new Size(202, 49);
+            changedBase.Size = new Size(128, 49);
             changedBase.TabIndex = 30;
             // 
-            // Form1
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            label6.Location = new Point(438, 326);
+            label6.Name = "label6";
+            label6.Size = new Size(53, 45);
+            label6.TabIndex = 31;
+            label6.Text = "из";
+            // 
+            // Translater
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(255, 224, 192);
+            BackColor = Color.FromArgb(199, 210, 242);
             ClientSize = new Size(1103, 809);
+            Controls.Add(label6);
             Controls.Add(changedBase);
             Controls.Add(baseToChange);
             Controls.Add(accuracy);
@@ -212,7 +226,7 @@
             Controls.Add(numbre);
             Controls.Add(panel1);
             Controls.Add(label1);
-            Name = "Form1";
+            Name = "Translater";
             Text = "Form1";
             panel1.ResumeLayout(false);
             ResumeLayout(false);
@@ -236,5 +250,6 @@
         private TextBox accuracy;
         private TextBox baseToChange;
         private TextBox changedBase;
+        private Label label6;
     }
 }
