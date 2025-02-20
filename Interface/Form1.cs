@@ -1,9 +1,9 @@
 using ClassLibrary;
 namespace Interface
 {
-    public partial class Translator : Form
+    public partial class Translater : Form
     {
-        public Translator()
+        public Translater()
         {
             InitializeComponent();
         }
