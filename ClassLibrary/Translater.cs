@@ -125,7 +125,7 @@ namespace ClassLibrary
 
             //Обработка результата
             //обрабатываем округление, замен точки на запятую, проверяем наличие дробной части
-            double resultPrecalc = (Math.Round(double.Parse(wholeDec + (fracDec > 0 ? "." + ((fracDec * 10).ToString("")).Replace(".", "") : "")), m));
+            double resultPrecalc = (Math.Round((wholeDec + fracDec), m));
             result = (isNegative ? "-" : "") + (resultPrecalc.ToString().Replace(".", ","));
 
             //возврат
