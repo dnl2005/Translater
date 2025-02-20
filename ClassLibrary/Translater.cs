@@ -163,17 +163,23 @@ namespace ClassLibrary
         /// <param name="outBase">конечная система счисления в которую переводим</param>
         /// <param name="m">точность, количество знаков после запятой</param>
         /// <returns>возвращает число в конечной системе счисления, тип данных - строка</returns>
-        public static string MainTranslate(string n, int nBase, int outBase, int m)
+        public static string MainTranslate(string n, string nBase, string outBase, string m)
         {
+            ErrorDispatcher(n, nBase, outBase, m);
+
+            int notationFrom = int.Parse(nBase);
+            int notationTo = int.Parse(outBase);
+            int accuracy = int.Parse(m);
+
             string nDec;//представление числа в десятеричной сс
             string nOther;//представление числа в конечной сс
 
-            if (nBase != 10)//проверяем чтобы начальная сс не была уже десятеричной
+            if (notationFrom != 10)//проверяем чтобы начальная сс не была уже десятеричной
             {
-                nDec = ConvertOtherToDec(n, nBase, m);//переводим из начальной сс в десятеричную
-                if (outBase != 10) //проверяем если конечная сс должна быть десятеричной, если да то просто возвращаем
+                nDec = ConvertOtherToDec(n, notationFrom, accuracy);//переводим из начальной сс в десятеричную
+                if (notationTo != 10) //проверяем если конечная сс должна быть десятеричной, если да то просто возвращаем
                 {
-                    nOther = ConvertDecToOther(nDec, outBase, m);
+                    nOther = ConvertDecToOther(nDec, notationTo, accuracy);
                 }
                 else
                 {
@@ -183,9 +189,9 @@ namespace ClassLibrary
             }
             else 
             {
-                if (outBase != 10)
+                if (notationTo != 10)
                 {
-                    nOther = ConvertDecToOther(n, outBase, m);
+                    nOther = ConvertDecToOther(n, notationTo, accuracy);
                 }
                 else
                 {
