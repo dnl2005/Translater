@@ -203,6 +203,10 @@ namespace ClassLibrary
         /// <returns>возвращает число в конечной системе счисления, тип данных - строка</returns>
         public static string MainTranslate(string n, string nBase, string outBase, string m)
         {
+            // если точность не указана, установить стандартное знаение округления 3
+            if (m == "")
+                m = "3";
+
             ErrorDispatcher(n, nBase, outBase, m);
 
             int notationFrom = int.Parse(nBase);
