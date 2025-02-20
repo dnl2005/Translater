@@ -2,7 +2,7 @@
 
 namespace ClassLibrary
 {
-    public class Translater
+    public static class Translater
     {
         public static readonly string invalidNotationFromInputEx = "Ошибка: введены недопустимые символы в исходной системе счисления. См. справку";
         public static readonly string invalidNotationFromValueEx = "Ошибка: введено неверное значение в исходной системе счисления. См. справку";
