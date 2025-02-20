@@ -165,7 +165,7 @@ namespace ClassLibrary
             }
 
             // переводим дробную часть
-            while (frac > 0)
+            while (frac > 0 && fracNew.Length <= m+1)
             {
                 frac *= newBase;
                 int intPart = (int)frac;
@@ -187,7 +187,7 @@ namespace ClassLibrary
                 fracNew = fracNew.Substring(0, fracNew.Length - 1) + roundDigit;//собираем дробную часть обратно
             } 
 
-            result = (isNegative ? "-" : "") + wholeNew+(fracNew != "0" ? ","+ fracNew : "");//конвертируем результат и форматируем
+            result = (isNegative ? "-" : "") + wholeNew+(fracNew != "" ? ","+ fracNew : "");//конвертируем результат и форматируем
                                                                 // возврат
             return result;
         }
