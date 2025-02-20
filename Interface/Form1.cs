@@ -13,7 +13,7 @@ namespace Interface
 
             try
             {
-                resultNumbre.Text = Translater.MainTranslate(numbre.Text, baseToChange.Text, changedBase.Text, accuracy.Text);
+                resultNumbre.Text = Translater.MainTranslate(numbre.Text.ToUpper(), baseToChange.Text, changedBase.Text, accuracy.Text);
             }
             catch (Exception exit)
             {

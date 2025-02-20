@@ -60,10 +60,10 @@ namespace ClassLibrary
             for (int i = 0; i < number.Length; i++)
             {
 
-                if (!digits.Contains(number[i]))
+                if (!digits.Contains(number[i]) && !(number[i] == '-') && !(number[i]==','))
                     throw new Exception(invalidNumberInputEx);
 
-                if (number[i] > notationFromUC)
+                if (number[i] >= notationFromUC)
                     throw new Exception(DigitOutOfNotationToEx);
 
             }
