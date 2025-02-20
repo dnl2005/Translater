@@ -5,14 +5,17 @@ namespace ClassLibrary
     public static class Translater
     {
         private static readonly string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//Алфавит
-        public static readonly string invalidNotationFromInputEx = "Ошибка: введены недопустимые символы в исходной системе счисления. См. справку";
-        public static readonly string invalidNotationFromValueEx = "Ошибка: введено неверное значение в исходной системе счисления. См. справку";
-        public static readonly string invalidNotationToInputEx = "Ошибка: введены недопустимые символы в конечной системе счисления. См. справку";
-        public static readonly string invalidNotationToValueEx = "Ошибка: введено неверное значение в исходной системе счисления. См. справку";
-        public static readonly string invalidAccuracyInputEx = "Ошибка: введены недопустимые символы в точности представления. См. справку";
-        public static readonly string invalidAccuracyValueEx = "Ошибка: введено недопустимое значение в точности представления. См. справку";
-        public static readonly string invalidNumberInputEx = "Ошибка: введены недопустимые значения в числе для перевода. См. справку";
-        public static readonly string DigitOutOfNotationToEx = "Ошибка: в выбранном числе присутствуют цифры вне выбранной исходной системы счисления";
+        public static readonly string noNotationFromInputEx = "Значение исходной системы счисления не было введено";
+        public static readonly string invalidNotationFromInputEx = "Введены недопустимые символы в исходной системе счисления. См. справку";
+        public static readonly string invalidNotationFromValueEx = "Введено неверное значение в исходной системе счисления. См. справку";
+        public static readonly string noNotationToInputEx = "Значение конечной системы счисления не было введено";
+        public static readonly string invalidNotationToInputEx = "Введены недопустимые символы в конечной системе счисления. См. справку";
+        public static readonly string invalidNotationToValueEx = "Введено неверное значение в исходной системе счисления. См. справку";
+        public static readonly string invalidAccuracyInputEx = "Введены недопустимые символы в точности представления. См. справку";
+        public static readonly string invalidAccuracyValueEx = "Введено недопустимое значение в точности представления. См. справку";
+        public static readonly string noNumberInputEx = "Число для перевода не было введено";
+        public static readonly string invalidNumberInputEx = "Введены недопустимые значения в числе для перевода. См. справку";
+        public static readonly string DigitOutOfNotationToEx = "В выбранном числе присутствуют цифры вне выбранной исходной системы счисления";
 
 
         /// <summary>
@@ -26,6 +29,9 @@ namespace ClassLibrary
         /// <exception cref="Exception">Возвращает ошибку, строка </exception>
         public static void ErrorDispatcher(string number, string notationFrom, string notationTo, string accuracy)
         {
+            if (notationFrom== "")
+                throw new Exception(noNotationFromInputEx);
+
             if (!int.TryParse(notationFrom, out int result))
             {
                 throw new Exception(invalidNotationFromInputEx);
@@ -37,6 +43,10 @@ namespace ClassLibrary
             }
 
             char notationFromUC = digits[int.Parse(notationFrom)]; //перевод изначальной системы счисления в UniCode
+
+            if (notationTo == "")
+                throw new Exception(noNotationToInputEx);
+
             if (!int.TryParse(notationTo, out result))
             {
                 throw new Exception(invalidNotationToInputEx);
@@ -57,13 +67,16 @@ namespace ClassLibrary
                 throw new Exception(invalidAccuracyValueEx);
             }
 
+            if (number == "")
+                throw new Exception(noNumberInputEx);
+
             for (int i = 0; i < number.Length; i++)
             {
 
-                if (!digits.Contains(number[i]))
+                if (!digits.Contains(number[i]) && !(number[i] == '-') && !(number[i]==','))
                     throw new Exception(invalidNumberInputEx);
 
-                if (number[i] > notationFromUC)
+                if (number[i] >= notationFromUC)
                     throw new Exception(DigitOutOfNotationToEx);
 
             }
@@ -78,7 +91,13 @@ namespace ClassLibrary
         public static string ConvertOtherToDec(string n, int nBase, int m)
         {
             //Блок Инициализации
-
+            n = n.Replace(".", ",");
+            bool isNegative = n[0] == '-';
+            if (isNegative)
+            {
+                n = n.Replace("-","");
+            }
+            
             string result = "";//возвращаемый результат
             string[] splitNum = n.Split(',');//разделяем начальное число на целую и дробную части
 
@@ -107,7 +126,7 @@ namespace ClassLibrary
             //Обработка результата
             //обрабатываем округление, замен точки на запятую, проверяем наличие дробной части
             double resultPrecalc = (Math.Round(double.Parse(wholeDec + (fracDec > 0 ? "." + ((fracDec * 10).ToString("")).Replace(".", "") : "")), m));
-            result = (resultPrecalc.ToString().Replace(".", ","));
+            result = (isNegative ? "-" : "") + (resultPrecalc.ToString().Replace(".", ","));
 
             //возврат
             return result;
@@ -122,6 +141,12 @@ namespace ClassLibrary
         /// <returns>возвращает число в иной системе счисления, тип данных - строка</returns>
         public static string ConvertDecToOther(string n, int newBase, int m)
         {
+            n = n.Replace(".", ",");
+            bool isNegative = n[0] == '-';
+            if (isNegative)
+            {
+                n = n.Replace("-", "");
+            }
             string result = ""; // возвращаемый результат
             string[] splitNum = n.Contains(',') ? n.Split(',') : new string[] { n }; // разделяем начальное число на целую и дробную части
             double resultPrecalc = 0;
@@ -140,7 +165,7 @@ namespace ClassLibrary
             }
 
             // переводим дробную часть
-            while (frac > 0 && fracNew.Length < m)
+            while (frac > 0 && fracNew.Length <= m+1)
             {
                 frac *= newBase;
                 int intPart = (int)frac;
@@ -148,8 +173,21 @@ namespace ClassLibrary
                 frac -= intPart; // Убираем целую часть
             }
 
-            resultPrecalc = Math.Round(double.Parse(wholeNew + (n.Contains(',') ? ("." + fracNew) : "")), m);//собираем число обратно и форматируем результат 
-            result = resultPrecalc.ToString().Replace('.', ',');//конвертируем результат и форматируем
+            if (fracNew.Length > m)//Округленике в любой сс. Смотрим, чтобы вообще надо было округлять
+            {
+                char lastDigit = fracNew[m];//Находим цифру после той, до которой мы округляем
+                fracNew = fracNew.Substring(0, m);//Отрезаем незначащую часть
+                char roundDigit = fracNew[fracNew.Length - 1];//находи последнюю цифру
+                if (digits.IndexOf(lastDigit) >= newBase / 2)//Если значение цифры после той, до которой мы округляем
+                                                             //больше половины основания системы счисления,
+                                                             //мы округляем в большую сторону
+                {
+                    roundDigit = digits[Math.Clamp(digits.IndexOf(roundDigit) + 1, 0, newBase - 1)];
+                }
+                fracNew = fracNew.Substring(0, fracNew.Length - 1) + roundDigit;//собираем дробную часть обратно
+            } 
+
+            result = (isNegative ? "-" : "") + wholeNew+(fracNew != "" ? ","+ fracNew : "");//конвертируем результат и форматируем
                                                                 // возврат
             return result;
         }

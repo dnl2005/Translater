@@ -8,15 +8,15 @@ namespace Interface
             InitializeComponent();
         }
 
-        //функция события "клик" по кнопке "результат"
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅ" пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
         private void result_Click(object sender, EventArgs e)
         {
-            //вызывается основная функция перевода числа
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
             try
             {
-                resultNumbre.Text = ClassLibrary.Translater.MainTranslate(numbre.Text, baseToChange.Text, changedBase.Text, accuracy.Text);
+                resultNumbre.Text = Translater.MainTranslate(numbre.Text.ToUpper(), baseToChange.Text, changedBase.Text, accuracy.Text);
             }
-            catch (Exception exit) //если получена ошибка, то вывводит сообщение
+            catch (Exception exit) //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             {
                 MessageBox.Show(exit.Message);
             };
