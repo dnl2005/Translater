@@ -90,6 +90,11 @@ namespace ClassLibrary
         /// <returns>возвращает число в десятичной системе счисления, тип данных - строка</returns>
         public static string ConvertOtherToDec(string n, int nBase, int m)
         {
+            var nfi = new System.Globalization.NumberFormatInfo
+            {
+                NumberDecimalSeparator = ","
+            };
+
             //Блок Инициализации
             n = n.Replace(".", ",");
             bool isNegative = n[0] == '-';
@@ -129,7 +134,7 @@ namespace ClassLibrary
             result = (isNegative ? "-" : "") + (resultPrecalc.ToString().Replace(".", ","));
 
             //возврат
-            return result;
+            return result.ToString(nfi);
         }
 
         /// <summary>
@@ -141,6 +146,11 @@ namespace ClassLibrary
         /// <returns>возвращает число в иной системе счисления, тип данных - строка</returns>
         public static string ConvertDecToOther(string n, int newBase, int m)
         {
+            var nfi = new System.Globalization.NumberFormatInfo
+            {
+                NumberDecimalSeparator = ","
+            };
+
             n = n.Replace(".", ",");
             bool isNegative = n[0] == '-';
             if (isNegative)
@@ -189,7 +199,7 @@ namespace ClassLibrary
 
             result = (isNegative ? "-" : "") + wholeNew+(fracNew != "" ? ","+ fracNew : "");//конвертируем результат и форматируем
                                                                 // возврат
-            return result;
+            return result.ToString(nfi);
         }
         
         /// <summary>
