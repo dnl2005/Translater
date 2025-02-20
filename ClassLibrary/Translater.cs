@@ -91,7 +91,13 @@ namespace ClassLibrary
         public static string ConvertOtherToDec(string n, int nBase, int m)
         {
             //Блок Инициализации
-
+            n = n.Replace(".", ",");
+            bool isNegative = n[0] == '-';
+            if (isNegative)
+            {
+                n = n.Replace("-","");
+            }
+            
             string result = "";//возвращаемый результат
             string[] splitNum = n.Split(',');//разделяем начальное число на целую и дробную части
 
@@ -120,7 +126,7 @@ namespace ClassLibrary
             //Обработка результата
             //обрабатываем округление, замен точки на запятую, проверяем наличие дробной части
             double resultPrecalc = (Math.Round(double.Parse(wholeDec + (fracDec > 0 ? "." + ((fracDec * 10).ToString("")).Replace(".", "") : "")), m));
-            result = (resultPrecalc.ToString().Replace(".", ","));
+            result = (isNegative ? "-" : "") + (resultPrecalc.ToString().Replace(".", ","));
 
             //возврат
             return result;
@@ -135,6 +141,12 @@ namespace ClassLibrary
         /// <returns>возвращает число в иной системе счисления, тип данных - строка</returns>
         public static string ConvertDecToOther(string n, int newBase, int m)
         {
+            n = n.Replace(".", ",");
+            bool isNegative = n[0] == '-';
+            if (isNegative)
+            {
+                n = n.Replace("-", "");
+            }
             string result = ""; // возвращаемый результат
             string[] splitNum = n.Contains(',') ? n.Split(',') : new string[] { n }; // разделяем начальное число на целую и дробную части
             double resultPrecalc = 0;
@@ -153,7 +165,7 @@ namespace ClassLibrary
             }
 
             // переводим дробную часть
-            while (frac > 0 && fracNew.Length < m)
+            while (frac > 0)
             {
                 frac *= newBase;
                 int intPart = (int)frac;
@@ -161,8 +173,21 @@ namespace ClassLibrary
                 frac -= intPart; // Убираем целую часть
             }
 
-            resultPrecalc = Math.Round(double.Parse(wholeNew + (n.Contains(',') ? ("." + fracNew) : "")), m);//собираем число обратно и форматируем результат 
-            result = resultPrecalc.ToString().Replace('.', ',');//конвертируем результат и форматируем
+            if (fracNew.Length > m)//Округленике в любой сс. Смотрим, чтобы вообще надо было округлять
+            {
+                char lastDigit = fracNew[m];//Находим цифру после той, до которой мы округляем
+                fracNew = fracNew.Substring(0, m);//Отрезаем незначащую часть
+                char roundDigit = fracNew[fracNew.Length - 1];//находи последнюю цифру
+                if (digits.IndexOf(lastDigit) >= newBase / 2)//Если значение цифры после той, до которой мы округляем
+                                                             //больше половины основания системы счисления,
+                                                             //мы округляем в большую сторону
+                {
+                    roundDigit = digits[Math.Clamp(digits.IndexOf(roundDigit) + 1, 0, newBase - 1)];
+                }
+                fracNew = fracNew.Substring(0, fracNew.Length - 1) + roundDigit;//собираем дробную часть обратно
+            } 
+
+            result = (isNegative ? "-" : "") + wholeNew+(fracNew != "0" ? ","+ fracNew : "");//конвертируем результат и форматируем
                                                                 // возврат
             return result;
         }
