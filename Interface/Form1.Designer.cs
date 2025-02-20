@@ -28,12 +28,213 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            components = new System.ComponentModel.Container();
+            label1 = new Label();
+            panel1 = new Panel();
+            label2 = new Label();
+            numbre = new TextBox();
+            resultButton = new Button();
+            help = new Label();
+            toolTip1 = new ToolTip(components);
+            label3 = new Label();
+            label5 = new Label();
+            label4 = new Label();
+            resultNumbre = new Label();
+            label7 = new Label();
+            accuracy = new TextBox();
+            baseToChange = new TextBox();
+            changedBase = new TextBox();
+            panel1.SuspendLayout();
+            SuspendLayout();
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            label1.Location = new Point(91, 210);
+            label1.Name = "label1";
+            label1.Size = new Size(248, 45);
+            label1.TabIndex = 0;
+            label1.Text = "Исходное число";
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(128, 255, 255);
+            panel1.Controls.Add(label2);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1103, 133);
+            panel1.TabIndex = 1;
+            // 
+            // label2
+            // 
+            label2.Dock = DockStyle.Fill;
+            label2.Font = new Font("Monotype Corsiva", 28.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            label2.ForeColor = Color.Green;
+            label2.Location = new Point(0, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(1103, 133);
+            label2.TabIndex = 1;
+            label2.Text = "Перевод чисел из одной системы счисления в другую ";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // numbre
+            // 
+            numbre.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            numbre.Location = new Point(497, 210);
+            numbre.Name = "numbre";
+            numbre.Size = new Size(202, 49);
+            numbre.TabIndex = 2;
+            // 
+            // resultButton
+            // 
+            resultButton.Font = new Font("Monotype Corsiva", 16.2F, FontStyle.Italic, GraphicsUnit.Point, 204);
+            resultButton.Location = new Point(497, 545);
+            resultButton.Name = "resultButton";
+            resultButton.Size = new Size(274, 73);
+            resultButton.TabIndex = 8;
+            resultButton.Text = "Рассчитать";
+            resultButton.UseVisualStyleBackColor = true;
+            resultButton.Click += result_Click;
+            // 
+            // help
+            // 
+            help.AutoSize = true;
+            help.BackColor = Color.DeepSkyBlue;
+            help.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            help.ForeColor = SystemColors.ControlLightLight;
+            help.Location = new Point(1060, 759);
+            help.Name = "help";
+            help.Size = new Size(31, 41);
+            help.TabIndex = 20;
+            help.Text = "?";
+            help.TextAlign = ContentAlignment.MiddleCenter;
+            toolTip1.SetToolTip(help, "svjsojvds\r\nykff");
+            // 
+            // toolTip1
+            // 
+            toolTip1.AutomaticDelay = 100;
+            toolTip1.AutoPopDelay = 0;
+            toolTip1.InitialDelay = 100;
+            toolTip1.ReshowDelay = 20;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            label3.Location = new Point(91, 326);
+            label3.Name = "label3";
+            label3.Size = new Size(351, 45);
+            label3.TabIndex = 21;
+            label3.Text = "Направления перевода";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            label5.Location = new Point(91, 679);
+            label5.Name = "label5";
+            label5.Size = new Size(184, 45);
+            label5.TabIndex = 22;
+            label5.Text = "Результат";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            label4.Location = new Point(736, 326);
+            label4.Name = "label4";
+            label4.Size = new Size(35, 45);
+            label4.TabIndex = 25;
+            label4.Text = "в";
+            // 
+            // resultNumbre
+            // 
+            resultNumbre.AutoSize = true;
+            resultNumbre.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            resultNumbre.Location = new Point(497, 679);
+            resultNumbre.Name = "resultNumbre";
+            resultNumbre.Size = new Size(65, 45);
+            resultNumbre.TabIndex = 26;
+            resultNumbre.Text = "     ";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            label7.Location = new Point(91, 444);
+            label7.Name = "label7";
+            label7.Size = new Size(177, 45);
+            label7.TabIndex = 27;
+            label7.Text = "Точность";
+            // 
+            // accuracy
+            // 
+            accuracy.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            accuracy.Location = new Point(497, 440);
+            accuracy.Name = "accuracy";
+            accuracy.Size = new Size(202, 49);
+            accuracy.TabIndex = 28;
+            // 
+            // baseToChange
+            // 
+            baseToChange.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            baseToChange.Location = new Point(497, 326);
+            baseToChange.Name = "baseToChange";
+            baseToChange.Size = new Size(202, 49);
+            baseToChange.TabIndex = 29;
+            // 
+            // changedBase
+            // 
+            changedBase.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            changedBase.Location = new Point(812, 326);
+            changedBase.Name = "changedBase";
+            changedBase.Size = new Size(202, 49);
+            changedBase.TabIndex = 30;
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(255, 224, 192);
+            ClientSize = new Size(1103, 809);
+            Controls.Add(changedBase);
+            Controls.Add(baseToChange);
+            Controls.Add(accuracy);
+            Controls.Add(label7);
+            Controls.Add(resultNumbre);
+            Controls.Add(label4);
+            Controls.Add(label5);
+            Controls.Add(label3);
+            Controls.Add(help);
+            Controls.Add(resultButton);
+            Controls.Add(numbre);
+            Controls.Add(panel1);
+            Controls.Add(label1);
+            Name = "Form1";
+            Text = "Form1";
+            panel1.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Label label1;
+        private Panel panel1;
+        private Label label2;
+        private TextBox numbre;
+        private Button resultButton;
+        private Label help;
+        private ToolTip toolTip1;
+        private Label label3;
+        private Label label5;
+        private Label label4;
+        private Label resultNumbre;
+        private Label label7;
+        private TextBox accuracy;
+        private TextBox baseToChange;
+        private TextBox changedBase;
     }
 }
