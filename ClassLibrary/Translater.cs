@@ -5,12 +5,15 @@ namespace ClassLibrary
     public static class Translater
     {
         private static readonly string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//Алфавит
+        public static readonly string noNotationFromInputEx = "Значение исходной системы счисления не было введено";
         public static readonly string invalidNotationFromInputEx = "Введены недопустимые символы в исходной системе счисления. См. справку";
         public static readonly string invalidNotationFromValueEx = "Введено неверное значение в исходной системе счисления. См. справку";
+        public static readonly string noNotationToInputEx = "Значение конечной системы счисления не было введено";
         public static readonly string invalidNotationToInputEx = "Введены недопустимые символы в конечной системе счисления. См. справку";
         public static readonly string invalidNotationToValueEx = "Введено неверное значение в исходной системе счисления. См. справку";
         public static readonly string invalidAccuracyInputEx = "Введены недопустимые символы в точности представления. См. справку";
         public static readonly string invalidAccuracyValueEx = "Введено недопустимое значение в точности представления. См. справку";
+        public static readonly string noNumberInputEx = "Число для перевода не было введено";
         public static readonly string invalidNumberInputEx = "Введены недопустимые значения в числе для перевода. См. справку";
         public static readonly string DigitOutOfNotationToEx = "В выбранном числе присутствуют цифры вне выбранной исходной системы счисления";
 
@@ -26,6 +29,9 @@ namespace ClassLibrary
         /// <exception cref="Exception">Возвращает ошибку, строка </exception>
         public static void ErrorDispatcher(string number, string notationFrom, string notationTo, string accuracy)
         {
+            if (notationFrom== "")
+                throw new Exception(noNotationFromInputEx);
+
             if (!int.TryParse(notationFrom, out int result))
             {
                 throw new Exception(invalidNotationFromInputEx);
@@ -37,6 +43,10 @@ namespace ClassLibrary
             }
 
             char notationFromUC = digits[int.Parse(notationFrom)]; //перевод изначальной системы счисления в UniCode
+
+            if (notationTo == "")
+                throw new Exception(noNotationToInputEx);
+
             if (!int.TryParse(notationTo, out result))
             {
                 throw new Exception(invalidNotationToInputEx);
@@ -56,6 +66,9 @@ namespace ClassLibrary
             {
                 throw new Exception(invalidAccuracyValueEx);
             }
+
+            if (number == "")
+                throw new Exception(noNumberInputEx);
 
             for (int i = 0; i < number.Length; i++)
             {
