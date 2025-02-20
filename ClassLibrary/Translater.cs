@@ -15,7 +15,7 @@ namespace ClassLibrary
         public static readonly string invalidAccuracyValueEx = "Введено недопустимое значение в точности представления. См. справку";
         public static readonly string noNumberInputEx = "Число для перевода не было введено";
         public static readonly string invalidNumberInputEx = "Введены недопустимые значения в числе для перевода. См. справку";
-        public static readonly string DigitOutOfNotationToEx = "В выбранном числе присутствуют цифры вне выбранной исходной системы счисления";
+        public static readonly string DigitOutOfNotationToEx = "В исходном числе присутствуют цифры вне выбранной исходной системы счисления";
 
 
         /// <summary>
@@ -69,6 +69,8 @@ namespace ClassLibrary
 
             if (number == "")
                 throw new Exception(noNumberInputEx);
+            if (number[0..].Count(c => c == '-')>1 || number.Count(c => c == ',')>1)
+                throw new Exception(invalidNumberInputEx);
 
             for (int i = 0; i < number.Length; i++)
             {
