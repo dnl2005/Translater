@@ -32,18 +32,18 @@
             label1 = new Label();
             panel1 = new Panel();
             label2 = new Label();
-            textBox1 = new TextBox();
-            button1 = new Button();
+            numbre = new TextBox();
+            resultButton = new Button();
             help = new Label();
             toolTip1 = new ToolTip(components);
             label3 = new Label();
             label5 = new Label();
             label4 = new Label();
-            label6 = new Label();
+            resultNumbre = new Label();
             label7 = new Label();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
-            textBox4 = new TextBox();
+            accuracy = new TextBox();
+            baseToChange = new TextBox();
+            changedBase = new TextBox();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -79,24 +79,24 @@
             label2.Text = "Перевод чисел из одной системы счисления в другую ";
             label2.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // textBox1
+            // numbre
             // 
-            textBox1.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            textBox1.Location = new Point(497, 210);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(202, 49);
-            textBox1.TabIndex = 2;
+            numbre.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            numbre.Location = new Point(497, 210);
+            numbre.Name = "numbre";
+            numbre.Size = new Size(202, 49);
+            numbre.TabIndex = 2;
             // 
-            // button1
+            // resultButton
             // 
-            button1.Font = new Font("Monotype Corsiva", 16.2F, FontStyle.Italic, GraphicsUnit.Point, 204);
-            button1.Location = new Point(497, 545);
-            button1.Name = "button1";
-            button1.Size = new Size(274, 73);
-            button1.TabIndex = 8;
-            button1.Text = "Рассчитать";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            resultButton.Font = new Font("Monotype Corsiva", 16.2F, FontStyle.Italic, GraphicsUnit.Point, 204);
+            resultButton.Location = new Point(497, 545);
+            resultButton.Name = "resultButton";
+            resultButton.Size = new Size(274, 73);
+            resultButton.TabIndex = 8;
+            resultButton.Text = "Рассчитать";
+            resultButton.UseVisualStyleBackColor = true;
+            resultButton.Click += result_Click;
             // 
             // help
             // 
@@ -149,15 +149,15 @@
             label4.TabIndex = 25;
             label4.Text = "в";
             // 
-            // label6
+            // resultNumbre
             // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            label6.Location = new Point(497, 679);
-            label6.Name = "label6";
-            label6.Size = new Size(65, 45);
-            label6.TabIndex = 26;
-            label6.Text = "     ";
+            resultNumbre.AutoSize = true;
+            resultNumbre.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            resultNumbre.Location = new Point(497, 679);
+            resultNumbre.Name = "resultNumbre";
+            resultNumbre.Size = new Size(65, 45);
+            resultNumbre.TabIndex = 26;
+            resultNumbre.Text = "     ";
             // 
             // label7
             // 
@@ -169,29 +169,29 @@
             label7.TabIndex = 27;
             label7.Text = "Точность";
             // 
-            // textBox2
+            // accuracy
             // 
-            textBox2.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            textBox2.Location = new Point(497, 440);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(202, 49);
-            textBox2.TabIndex = 28;
+            accuracy.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            accuracy.Location = new Point(497, 440);
+            accuracy.Name = "accuracy";
+            accuracy.Size = new Size(202, 49);
+            accuracy.TabIndex = 28;
             // 
-            // textBox3
+            // baseToChange
             // 
-            textBox3.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            textBox3.Location = new Point(497, 326);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(202, 49);
-            textBox3.TabIndex = 29;
+            baseToChange.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            baseToChange.Location = new Point(497, 326);
+            baseToChange.Name = "baseToChange";
+            baseToChange.Size = new Size(202, 49);
+            baseToChange.TabIndex = 29;
             // 
-            // textBox4
+            // changedBase
             // 
-            textBox4.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            textBox4.Location = new Point(812, 326);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(202, 49);
-            textBox4.TabIndex = 30;
+            changedBase.Font = new Font("Monotype Corsiva", 22.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            changedBase.Location = new Point(812, 326);
+            changedBase.Name = "changedBase";
+            changedBase.Size = new Size(202, 49);
+            changedBase.TabIndex = 30;
             // 
             // Form1
             // 
@@ -199,17 +199,17 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 224, 192);
             ClientSize = new Size(1103, 809);
-            Controls.Add(textBox4);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
+            Controls.Add(changedBase);
+            Controls.Add(baseToChange);
+            Controls.Add(accuracy);
             Controls.Add(label7);
-            Controls.Add(label6);
+            Controls.Add(resultNumbre);
             Controls.Add(label4);
             Controls.Add(label5);
             Controls.Add(label3);
             Controls.Add(help);
-            Controls.Add(button1);
-            Controls.Add(textBox1);
+            Controls.Add(resultButton);
+            Controls.Add(numbre);
             Controls.Add(panel1);
             Controls.Add(label1);
             Name = "Form1";
@@ -224,17 +224,17 @@
         private Label label1;
         private Panel panel1;
         private Label label2;
-        private TextBox textBox1;
-        private Button button1;
+        private TextBox numbre;
+        private Button resultButton;
         private Label help;
         private ToolTip toolTip1;
         private Label label3;
         private Label label5;
         private Label label4;
-        private Label label6;
+        private Label resultNumbre;
         private Label label7;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private TextBox textBox4;
+        private TextBox accuracy;
+        private TextBox baseToChange;
+        private TextBox changedBase;
     }
 }
