@@ -69,6 +69,8 @@ namespace ClassLibrary
 
             if (number == "")
                 throw new Exception(noNumberInputEx);
+            if (number[1..].Count(c => c == '-')>0 || number.Count(c => c == ',')>1)
+                throw new Exception(invalidNumberInputEx);
 
             for (int i = 0; i < number.Length; i++)
             {
@@ -117,6 +119,11 @@ namespace ClassLibrary
         /// <returns>возвращает число в десятичной системе счисления, тип данных - строка</returns>
         private static string ConvertOtherToDec(string n, int nBase, int m)
         {
+            var nfi = new System.Globalization.NumberFormatInfo
+            {
+                NumberDecimalSeparator = ","
+            };
+
             //Блок Инициализации
             bool isNegative = n[0] == '-';
             if (isNegative) n = n.Replace("-", "");
@@ -134,10 +141,12 @@ namespace ClassLibrary
 
             //Обработка результата
             //обрабатываем округление, замен точки на запятую, проверяем наличие дробной части
+            double resultPrecalc = (Math.Round(double.Parse(wholeDec + (fracDec > 0 ? "." + ((fracDec * 10).ToString("")).Replace(".", "") : "")), m));
+            result = (isNegative ? "-" : "") + (resultPrecalc.ToString().Replace(".", ","));
 
             result = FormatDecOutput(isNegative, wholeDec, fracDec, m);
             //возврат
-            return result;
+            return result.ToString(nfi);
         }
 
         private static string FormatDecOutput(bool isNegative, int wholeDec, double fracDec, int m)
@@ -150,12 +159,29 @@ namespace ClassLibrary
         /// Вспомогательная функция для преобразования целой
         /// части из десятичной системы счисления в иную
         /// </summary>
-        /// <param name="whole">целая часть из десятичного числа, тип данных - целое число</param>
-        /// <param name="newBase"></param>
-        /// <returns></returns>
-        private static string ConvertWholeDecToOther(int whole, int newBase)
+        /// <param name="n">исходное число в десятичной системе счисления</param>
+        /// <param name="nBase">основание системы счисления в которую мы переводим</param>
+        /// <param name="m">точность, кол-во знаков после запятой</param>
+        /// <returns>возвращает число в иной системе счисления, тип данных - строка</returns>
+        public static string ConvertDecToOther(string n, int newBase, int m)
         {
-            string wholeNew = "";
+            n = n.Replace(".", ",");
+            bool isNegative = n[0] == '-';
+            if (isNegative)
+            {
+                n = n.Replace("-", "");
+            }
+            string result = ""; // возвращаемый результат
+            string[] splitNum = n.Contains(',') ? n.Split(',') : new string[] { n }; // разделяем начальное число на целую и дробную части
+            double resultPrecalc = 0;
+
+            int whole = Int32.Parse(splitNum[0]); // целая часть
+            double frac = n.Contains(',') ? (double.Parse(splitNum.Length > 1 ? "0." + splitNum[1] : "0")) : 0; // дробная часть, проверяем если вообще есть
+
+            string wholeNew = ""; // переведенная целая часть
+            string fracNew = ""; // переведенная дробная часть
+
+            // переводим целую часть
             while (whole > 0)
             {
                 wholeNew = digits[whole % newBase] + wholeNew; // Взять остаток и перевести его в новую сс
@@ -235,7 +261,7 @@ namespace ClassLibrary
 
             result = FormatOutput(isNegative, wholeNew, fracNew);//конвертируем результат и форматируем
                                                                 // возврат
-            return result;
+            return result.ToString(nfi);
         }
 
         private static string FormatOutput(bool isNegative, string wholeNew, string fracNew) 
