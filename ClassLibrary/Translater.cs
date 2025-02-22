@@ -118,10 +118,10 @@ namespace ClassLibrary
         private static string ConvertOtherToDec(string n, int nBase, int m)
         {
             //Блок Инициализации
-            n = n.Replace(".", ",");
-
             bool isNegative = n[0] == '-';
             if (isNegative) n = n.Replace("-", "");
+
+            n = FormatInput(n);
 
             string result = "";//возвращаемый результат
             string[] splitNum = n.Split(',');//разделяем начальное число на целую и дробную части
@@ -131,18 +131,23 @@ namespace ClassLibrary
 
             int wholeDec = ConvertWholeOtherToDec(whole,nBase);//переведенная целая часть
             double fracDec = ConvertFracOtherToDec(frac,nBase);//переведенная дробная часть
-       
+
             //Обработка результата
             //обрабатываем округление, замен точки на запятую, проверяем наличие дробной части
-            double resultPrecalc = (Math.Round((wholeDec + fracDec), m));
-            result = (isNegative ? "-" : "") + (resultPrecalc.ToString().Replace(".", ","));
 
+            result = FormatDecOutput(isNegative, wholeDec, fracDec, m);
             //возврат
             return result;
         }
 
+        private static string FormatDecOutput(bool isNegative, int wholeDec, double fracDec, int m)
+        {
+            double resultPrecalc = (Math.Round((wholeDec + fracDec), m));
+            return (isNegative ? "-" : "") + (resultPrecalc.ToString().Replace(".", ","));
+        }
+
         /// <summary>
-        ///Вспомогательная функция для преобразования целой
+        /// Вспомогательная функция для преобразования целой
         /// части из десятичной системы счисления в иную
         /// </summary>
         /// <param name="whole">целая часть из десятичного числа, тип данных - целое число</param>
@@ -180,6 +185,13 @@ namespace ClassLibrary
                 frac -= intPart; // Убираем целую часть
             }
 
+            fracNew = FracRoundOther(fracNew,newBase,m);
+
+            return fracNew;
+        }
+
+        private static string FracRoundOther(string fracNew,int newBase, int m)
+        {
             if (fracNew.Length > m)//Округленике в любой сс. Смотрим, чтобы вообще надо было округлять
             {
                 char lastDigit = fracNew[m];//Находим цифру после той, до которой мы округляем
@@ -208,7 +220,7 @@ namespace ClassLibrary
         {
             bool isNegative = n[0] == '-';
             if (isNegative) n = n.Replace("-", "");
-
+            n = FormatInput(n);
             string result = ""; // возвращаемый результат
             string[] splitNum = n.Contains(',') ? n.Split(',') : [n]; // разделяем начальное число на целую и дробную части
 
@@ -221,9 +233,17 @@ namespace ClassLibrary
             // переводим дробную часть
             string fracNew = ConvertFracDecToOther(frac, newBase, m);
 
-            result = (isNegative ? "-" : "") + wholeNew+(fracNew != "" ? ","+ fracNew : "");//конвертируем результат и форматируем
+            result = FormatOutput(isNegative, wholeNew, fracNew);//конвертируем результат и форматируем
                                                                 // возврат
             return result;
+        }
+
+        private static string FormatOutput(bool isNegative, string wholeNew, string fracNew) 
+        {
+            var nfi = new System.Globalization.NumberFormatInfo{NumberDecimalSeparator = ","};
+
+            return (isNegative ? "-" : "") + wholeNew + (fracNew != "" ? "," + fracNew : "");
+
         }
 
         private static string FormatInput(string n)
@@ -253,10 +273,8 @@ namespace ClassLibrary
             int notationTo = int.Parse(outBase);
             int accuracy = int.Parse(m);
 
-            string nDec;//представление числа в десятеричной сс
-            string nOther;//представление числа в конечной сс
-            nDec = ConvertOtherToDec(n, notationFrom, accuracy);//переводим из начальной сс в десятеричную
-            nOther = ConvertDecToOther(nDec, notationTo, accuracy);
+            string nDec = ConvertOtherToDec(n, notationFrom, accuracy);//переводим из начальной сс в десятеричную
+            string nOther = ConvertDecToOther(nDec, notationTo, accuracy);//переводим из десятеричной в иную сс
 
             return nOther;
         }
