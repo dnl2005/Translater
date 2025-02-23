@@ -29,13 +29,11 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Translater));
             label1 = new Label();
             panel1 = new Panel();
             label2 = new Label();
             numbre = new TextBox();
             resultButton = new Button();
-            help = new Label();
             toolTip1 = new ToolTip(components);
             label3 = new Label();
             label5 = new Label();
@@ -46,6 +44,7 @@
             baseToChange = new TextBox();
             changedBase = new TextBox();
             label6 = new Label();
+            button1 = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -92,6 +91,7 @@
             // 
             // resultButton
             // 
+            resultButton.Cursor = Cursors.Hand;
             resultButton.Font = new Font("Monotype Corsiva", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
             resultButton.Location = new Point(392, 549);
             resultButton.Name = "resultButton";
@@ -100,20 +100,6 @@
             resultButton.Text = "Рассчитать";
             resultButton.UseVisualStyleBackColor = true;
             resultButton.Click += result_Click;
-            // 
-            // help
-            // 
-            help.AutoSize = true;
-            help.BackColor = Color.DeepSkyBlue;
-            help.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            help.ForeColor = SystemColors.ControlLightLight;
-            help.Location = new Point(1060, 759);
-            help.Name = "help";
-            help.Size = new Size(31, 41);
-            help.TabIndex = 20;
-            help.Text = "?";
-            help.TextAlign = ContentAlignment.MiddleCenter;
-            toolTip1.SetToolTip(help, resources.GetString("help.ToolTip"));
             // 
             // toolTip1
             // 
@@ -206,12 +192,27 @@
             label6.TabIndex = 31;
             label6.Text = "из";
             // 
+            // button1
+            // 
+            button1.BackColor = Color.DeepSkyBlue;
+            button1.Cursor = Cursors.Hand;
+            button1.Font = new Font("Arial Narrow", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            button1.ForeColor = SystemColors.ControlLightLight;
+            button1.Location = new Point(1045, 749);
+            button1.Name = "button1";
+            button1.Size = new Size(46, 48);
+            button1.TabIndex = 32;
+            button1.Text = "?";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += OpenTermOfUse_Click;
+            // 
             // Translater
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(199, 210, 242);
             ClientSize = new Size(1103, 809);
+            Controls.Add(button1);
             Controls.Add(label6);
             Controls.Add(changedBase);
             Controls.Add(baseToChange);
@@ -221,13 +222,11 @@
             Controls.Add(label4);
             Controls.Add(label5);
             Controls.Add(label3);
-            Controls.Add(help);
             Controls.Add(resultButton);
             Controls.Add(numbre);
             Controls.Add(panel1);
             Controls.Add(label1);
             Name = "Translater";
-            Text = "Form1";
             panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -240,7 +239,6 @@
         private Label label2;
         private TextBox numbre;
         private Button resultButton;
-        private Label help;
         private ToolTip toolTip1;
         private Label label3;
         private Label label5;
@@ -251,5 +249,6 @@
         private TextBox baseToChange;
         private TextBox changedBase;
         private Label label6;
+        private Button button1;
     }
 }

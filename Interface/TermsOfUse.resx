@@ -117,10 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>47, 19</value>
-  </metadata>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>25</value>
-  </metadata>
+  <data name="LabelTermOfUse.Text" xml:space="preserve">
+    <value>Программа для перевода числа из системы счисления P в систему счисления Q.
+
+Обязательные параметры помечены "*":
+Исходное число
+Направления перевода (исходная и конечная системы счисления)
+
+Дополнительный параметр Точность перевода для знаков после запятой по умолчанию установлен на 3.
+Пользователь может ввести свое значение.
+
+Требования к входным данным:
+Исходная и конечная системы счисления P,Q должны быть заданы целым числом в диапазоне от 2 до 36.
+Точность должна быть задана целым числом не меньше 1, не больше 10.
+Исходное число для перевода может быть задано следующими символами в любом регистре:
+-,0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
+Первое число не может быть нулём.
+Дробная часть записывается после запятой, а минус ставится без пробелов перед числом.
+Пример исходного числа: -fA,32
+
+Выходные данные: 
+Число в указанной конечной системе счисления.</value>
+  </data>
 </root>
