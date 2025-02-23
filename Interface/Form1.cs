@@ -22,15 +22,19 @@ namespace Interface
         public static readonly string notzero = "Число не должно начинаться с нуля. См. справку";
         private static string acc = "3";
 
-        /// <summary>
-        /// Метод для обработки ошибок входных данных.
-        /// Для проверки чисел на соответствие системе счисления и словарю используется сравнение по UniCode.
+
+        /// <summary> 
+        /// Проверяет корректность введённых значений оснований систем счисления.  
+        /// Выбрасывает исключение, если значения отсутствуют, не являются числами или выходят за допустимый диапазон (2–36).  
         /// </summary>
-        /// <param name="number">Вводимое для перевода число, строка</param>
-        /// <param name="notationFrom">Изначальная система счисления, строка</param>
-        /// <param name="notationTo">Конечная система счисления, строка</param>
-        /// <param name="accuracy">Точность представления для знаков после запятой, строка</param>
-        /// <exception cref="Exception">Возвращает ошибку, строка </exception>
+        /// <param name="notationFrom">Изначальная система счисления, строка.</param>
+        /// <param name="notationTo">Конечная система счисления, строка.</param>
+        /// <exception cref="Exception">
+        /// Выбрасывается, если:
+        /// - Значение `notationFrom` или `notationTo` отсутствует.
+        /// - Значение не является числом.
+        /// - Число выходит за допустимые границы (2–36).
+        /// </exception>
         private static void ExceptionNumberSystemBase(string notationFrom, string notationTo)
         {
             if (notationFrom == "")
@@ -46,7 +50,7 @@ namespace Interface
                 throw new Exception(invalidNotationFromValueEx);
             }
 
-            char notationFromUC = digits[int.Parse(notationFrom)]; //перевод изначальной системы счисления в UniCode
+            char notationFromUC = digits[int.Parse(notationFrom)]; // Перевод изначальной системы счисления в Unicode
 
             if (notationTo == "")
                 throw new Exception(noNotationToInputEx);
@@ -63,6 +67,11 @@ namespace Interface
         }
 
 
+        /// <summary> 
+        /// Проверяет корректность введённого значения точности и выбрасывает исключение при некорректных данных.  
+        /// </summary>
+        /// <param name="accuracy">Строковое представление точности для дробной части числа.</param>
+        /// <exception cref="Exception">Выбрасывается, если значение точности не является числом или выходит за допустимый диапазон (1–10).</exception>
         private static void ExceptionAccuracy(string accuracy)
         {
             if (accuracy != "")
@@ -71,7 +80,7 @@ namespace Interface
                 {
                     throw new Exception(invalidAccuracyInputEx);
                 }
-                if (int.Parse(accuracy) < 1 || int.Parse(accuracy) >= 10)
+                if (int.Parse(accuracy) < 1 || int.Parse(accuracy) > 10)
                 {
                     throw new Exception(invalidAccuracyValueEx);
                 }
@@ -82,14 +91,27 @@ namespace Interface
             }
         }
 
-
+        /// <summary> 
+        /// Проверяет корректность введённого числа в соответствии с указанной системой счисления.  
+        /// Выбрасывает исключение, если число отсутствует, содержит недопустимые символы или выходит за пределы системы счисления.  
+        /// </summary>
+        /// <param name="number">Вводимое для перевода число, строка.</param>
+        /// <param name="notationFrom">Изначальная система счисления, строка.</param>
+        /// <exception cref="Exception">
+        /// Выбрасывается, если:
+        /// - Число отсутствует.
+        /// - Число начинается с `-0`.
+        /// - Присутствуют некорректные символы (например, лишние `-` или `,`).
+        /// - Число содержит цифры, выходящие за пределы допустимого диапазона для указанной системы счисления.
+        /// </exception>
         private static void ExceptionNumber(string number, string notationFrom)
         {
             if (number == "")
                 throw new Exception(noNumberInputEx);
+
             if (number[0] == '-')
             {
-                if(number[1] == '0')
+                if (number[1] == '0')
                 {
                     throw new Exception(notzero);
                 }
@@ -98,21 +120,21 @@ namespace Interface
             {
                 throw new Exception(notzero);
             }
+
             if (number[1..].Count(c => c == '-') > 0 || number.Count(c => c == ',') > 1)
                 throw new Exception(invalidNumberInputEx);
 
             char notationFromUC = digits[int.Parse(notationFrom)];
             for (int i = 0; i < number.Length; i++)
             {
-
-                if (!digits.Contains(number[i]) && !(number[i] == '-') && !(number[i] == ','))
+                if (!digits.Contains(number[i]) && number[i] != '-' && number[i] != ',')
                     throw new Exception(invalidNumberInputEx);
 
                 if (number[i] >= notationFromUC)
                     throw new Exception(DigitOutOfNotationToEx);
-
             }
         }
+
 
         //обработка нажатия на кнопку
         private void result_Click(object sender, EventArgs e)
