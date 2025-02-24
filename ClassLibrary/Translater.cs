@@ -5,218 +5,8 @@ namespace ClassLibrary
     public static class Translater
     {
         private static readonly string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//Алфавит
-        public static readonly string noNotationFromInputEx = "Значение исходной системы счисления не было введено";
-        public static readonly string invalidNotationFromInputEx = "Введены недопустимые символы в исходной системе счисления. См. справку";
-        public static readonly string invalidNotationFromValueEx = "Введено неверное значение в исходной системе счисления. См. справку";
-        public static readonly string noNotationToInputEx = "Значение конечной системы счисления не было введено";
-        public static readonly string invalidNotationToInputEx = "Введены недопустимые символы в конечной системе счисления. См. справку";
-        public static readonly string invalidNotationToValueEx = "Введено неверное значение в исходной системе счисления. См. справку";
-        public static readonly string invalidAccuracyInputEx = "Введены недопустимые символы в точности представления. См. справку";
-        public static readonly string invalidAccuracyValueEx = "Введено недопустимое значение в точности представления. См. справку";
-        public static readonly string noNumberInputEx = "Число для перевода не было введено";
-        public static readonly string invalidNumberInputEx = "Введены недопустимые значения в числе для перевода. См. справку";
-        public static readonly string DigitOutOfNotationToEx = "В выбранном числе присутствуют цифры вне выбранной исходной системы счисления";
-        
 
-        /// <summary>
-        /// Метод для обработки ошибок входных данных.
-        /// Для проверки чисел на соответствие системе счисления и словарю используется сравнение по UniCode.
-        /// </summary>
-        /// <param name="number">Вводимое для перевода число, строка</param>
-        /// <param name="notationFrom">Изначальная система счисления, строка</param>
-        /// <param name="notationTo">Конечная система счисления, строка</param>
-        /// <param name="accuracy">Точность представления для знаков после запятой, строка</param>
-        /// <exception cref="Exception">Возвращает ошибку, строка </exception>
-        public static void ErrorDispatcher(string number, string notationFrom, string notationTo, string accuracy)
-        {
-            if (notationFrom== "")
-                throw new Exception(noNotationFromInputEx);
-
-            if (!int.TryParse(notationFrom, out int result))
-            {
-                throw new Exception(invalidNotationFromInputEx);
-            }
-
-            if (int.Parse(notationFrom) < 2 || int.Parse(notationFrom) > 36)
-            {
-                throw new Exception(invalidNotationFromValueEx);
-            }
-
-            char notationFromUC = digits[int.Parse(notationFrom)]; //перевод изначальной системы счисления в UniCode
-
-            if (notationTo == "")
-                throw new Exception(noNotationToInputEx);
-
-            if (!int.TryParse(notationTo, out result))
-            {
-                throw new Exception(invalidNotationToInputEx);
-            }
-
-            if (int.Parse(notationTo) < 2 || int.Parse(notationTo) > 36)
-            {
-                throw new Exception(invalidNotationToValueEx);
-            }
-
-            if (!int.TryParse(accuracy, out result))
-            {
-                throw new Exception(invalidAccuracyInputEx);
-            }
-
-            if (int.Parse(accuracy) < 1)
-            {
-                throw new Exception(invalidAccuracyValueEx);
-            }
-
-            if (number == "")
-                throw new Exception(noNumberInputEx);
-            if (number[1..].Count(c => c == '-')>0 || number.Count(c => c == ',')>1)
-                throw new Exception(invalidNumberInputEx);
-
-            for (int i = 0; i < number.Length; i++)
-            {
-
-                if (!digits.Contains(number[i]) && !(number[i] == '-') && !(number[i]==','))
-                    throw new Exception(invalidNumberInputEx);
-
-                if (number[i] >= notationFromUC)
-                    throw new Exception(DigitOutOfNotationToEx);
-
-            }
-        }
-
-        
-        private static int ConvertWholeOtherToDec(string whole,int nBase)
-        {
-            int wholeDec = 0;
-            for (int i = 0; i < whole.Length; i++)
-            {
-                char curNum = whole[i];
-                int curNumValue = digits.IndexOf(curNum);
-                wholeDec += curNumValue * (int)Math.Pow(nBase, whole.Length - i - 1);
-            }
-            return wholeDec;
-        }
-
-        private static double ConvertFracOtherToDec(string frac,int nBase)
-        {
-            double fracDec = 0;
-            for (int i = 0; i < frac.Length; i++)
-            {
-                char curNum = frac[i];
-                int curNumValue = digits.IndexOf(curNum);
-                fracDec += curNumValue * Math.Pow(nBase, -(i + 1));
-            }
-            return fracDec;
-
-        }
-
-        /// <summary>
-        ///Метод перевода из иной системы счисления в десятичную 
-        /// </summary>
-        /// <param name="n">исходное число в иной системе счисления</param>
-        /// <param name="nBase">основание системы счисления из которой мы переводим</param>
-        /// <param name="m">точность, кол-во знаков после запятой</param>
-        /// <returns>возвращает число в десятичной системе счисления, тип данных - строка</returns>
-        private static string ConvertOtherToDec(string n, int nBase, int m)
-        {
-            var nfi = new System.Globalization.NumberFormatInfo
-            {
-                NumberDecimalSeparator = ","
-            };
-
-            //Блок Инициализации
-            bool isNegative = n[0] == '-';
-            if (isNegative) n = n.Replace("-", "");
-
-            n = FormatInput(n);
-
-            string result = "";//возвращаемый результат
-            string[] splitNum = n.Split(',');//разделяем начальное число на целую и дробную части
-
-            string whole = splitNum[0];//целая часть
-            string frac = splitNum.Length > 1 ? splitNum[1] : "";//дробная часть, проверяем если вообще есть
-
-            int wholeDec = ConvertWholeOtherToDec(whole,nBase);//переведенная целая часть
-            double fracDec = ConvertFracOtherToDec(frac,nBase);//переведенная дробная часть
-
-            //Обработка результата
-            //обрабатываем округление, замен точки на запятую, проверяем наличие дробной части
-            double resultPrecalc = (Math.Round(double.Parse(wholeDec + (fracDec > 0 ? "." + ((fracDec * 10).ToString("")).Replace(".", "") : "")), m));
-            result = (isNegative ? "-" : "") + (resultPrecalc.ToString().Replace(".", ","));
-
-            result = FormatDecOutput(isNegative, wholeDec, fracDec, m);
-            //возврат
-            return result.ToString(nfi);
-        }
-
-        private static string FormatDecOutput(bool isNegative, int wholeDec, double fracDec, int m)
-        {
-            double resultPrecalc = (Math.Round((wholeDec + fracDec), m));
-            return (isNegative ? "-" : "") + (resultPrecalc.ToString().Replace(".", ","));
-        }
-
-        /// <summary>
-        /// Вспомогательная функция для преобразования целой
-        /// части из десятичной системы счисления в иную
-        /// </summary>
-        /// <param name="n">исходное число в десятичной системе счисления</param>
-        /// <param name="nBase">основание системы счисления в которую мы переводим</param>
-        /// <param name="m">точность, кол-во знаков после запятой</param>
-        /// <returns>возвращает число в иной системе счисления, тип данных - строка</returns>
-        public static string ConvertDecToOther(string n, int newBase, int m)
-        {
-            n = n.Replace(".", ",");
-            bool isNegative = n[0] == '-';
-            if (isNegative)
-            {
-                n = n.Replace("-", "");
-            }
-            string result = ""; // возвращаемый результат
-            string[] splitNum = n.Contains(',') ? n.Split(',') : new string[] { n }; // разделяем начальное число на целую и дробную части
-            double resultPrecalc = 0;
-
-            int whole = Int32.Parse(splitNum[0]); // целая часть
-            double frac = n.Contains(',') ? (double.Parse(splitNum.Length > 1 ? "0." + splitNum[1] : "0")) : 0; // дробная часть, проверяем если вообще есть
-
-            string wholeNew = ""; // переведенная целая часть
-            string fracNew = ""; // переведенная дробная часть
-
-            // переводим целую часть
-            while (whole > 0)
-            {
-                wholeNew = digits[whole % newBase] + wholeNew; // Взять остаток и перевести его в новую сс
-                whole /= newBase; // Делим нацело
-            }
-            return wholeNew;
-        }
-
-        /// <summary>
-        /// Вспомогательная функция для преобразования дробной
-        /// части из десятичной системы счисления в иную
-        /// </summary>
-        /// <param name="frac">дробная часть из десятичного числа, тип данных - вещественное число</param>
-        /// <param name="newBase">основание новой системы счисления, тип данных - целое число</param>
-        /// <param name="m">кол-во знаков после запятой, тип данных - целое число</param>
-        /// <returns>возвращает переведенную дробную часть, тип данных - строка</returns>
-        private static string ConvertFracDecToOther(double frac, int newBase, int m)
-        {
-            string fracNew = "";
-
-
-            while (frac > 0 && fracNew.Length <= m + 1)
-            {
-                frac *= newBase;//домножаем на новое основание сс
-                int intPart = (int)frac;//берем целую часть
-                fracNew += digits[intPart]; // Взять целую часть и перевести её в новую сс
-                frac -= intPart; // Убираем целую часть
-            }
-
-            fracNew = FracRoundOther(fracNew,newBase,m);
-
-            return fracNew;
-        }
-
-        private static string FracRoundOther(string fracNew,int newBase, int m)
+        private static string FracRoundOther(string fracNew, int newBase, int m)
         {
             if (fracNew.Length > m)//Округленике в любой сс. Смотрим, чтобы вообще надо было округлять
             {
@@ -234,51 +24,101 @@ namespace ClassLibrary
             return fracNew;
         }
 
-
-        /// <summary>
-        ///Метод перевода из десятичной системы счисления в иную
-        /// </summary>
-        /// <param name="n">исходное число в десятичной системе счисления</param>
-        /// <param name="nBase">основание системы счисления в которую мы переводим</param>
-        /// <param name="m">точность, кол-во знаков после запятой</param>
-        /// <returns>возвращает число в иной системе счисления, тип данных - строка</returns>
-        private static string ConvertDecToOther(string n, int newBase, int m)
+        private static string ConvertDecToOther(string n, int notationTo)
         {
-            bool isNegative = n[0] == '-';
-            if (isNegative) n = n.Replace("-", "");
-            n = FormatInput(n);
-            string result = ""; // возвращаемый результат
-            string[] splitNum = n.Contains(',') ? n.Split(',') : [n]; // разделяем начальное число на целую и дробную части
+            string otherN = "";
+            int digit = int.Parse(n);
 
-            int whole = Int32.Parse(splitNum[0]); // целая часть
-            double frac = n.Contains(',') ? (double.Parse(splitNum.Length > 1 ? "0." + splitNum[1] : "0")) : 0; // дробная часть, проверяем если вообще есть
+            while (digit > 0)
+            {
+                int remainder = digit % notationTo;
+                otherN = digits[remainder] + otherN;
+                digit /= notationTo;
+            }
 
-            // переводим целую часть
-            string wholeNew = ConvertWholeDecToOther(whole,newBase);
-
-            // переводим дробную часть
-            string fracNew = ConvertFracDecToOther(frac, newBase, m);
-
-            result = FormatOutput(isNegative, wholeNew, fracNew);//конвертируем результат и форматируем
-                                                                // возврат
-            return result.ToString(nfi);
+            return otherN;
         }
 
-        private static string FormatOutput(bool isNegative, string wholeNew, string fracNew) 
+        private static string ConvertFracDecToOther(string fract, int notationTo, int m)
         {
-            var nfi = new System.Globalization.NumberFormatInfo{NumberDecimalSeparator = ","};
+            string fracNew = "";
+            double frac = double.Parse(fract);
 
-            return (isNegative ? "-" : "") + wholeNew + (fracNew != "" ? "," + fracNew : "");
+            while (frac > 0)
+            {
+                frac *= notationTo;//домножаем на новое основание сс
+                int intPart = (int)frac;//берем целую часть
+                fracNew += digits[intPart]; // Взять целую часть и перевести её в новую сс
+                frac -= intPart; // Убираем целую часть
+            }
 
+            fracNew = FracRoundOther(fracNew, notationTo, m);
+
+            return fracNew;
         }
 
-        private static string FormatInput(string n)
+        private static string ConvertWholeOtherToDec(string whole, int notationFrom)
         {
-            n = n.Replace(".", ",");
-            return n;
+            int decWhole = 0;
+            for (int i = 0; i < whole.Length; i++)
+            {
+                char curNum = whole[i];
+                int curNumValue = digits.IndexOf(curNum);
+                decWhole += curNumValue * (int)Math.Pow(notationFrom, whole.Length - i - 1);
+            }
+            return decWhole.ToString();
         }
 
-        
+        private static string ConvertWhole(string whole, int notationFrom, int notationTo)
+        {
+            string decWhole = ConvertWholeOtherToDec(whole, notationFrom);
+            string resWhole = ConvertDecToOther(decWhole, notationTo);
+            return resWhole;
+        }
+
+        private static string ConvertFracOtherToDec(string frac, int notationFrom)
+        {
+            double decFrac = 0;
+            for (int i = 0; i < frac.Length; i++)
+            {
+                char curNum = frac[i];
+                int curNumValue = digits.IndexOf(curNum);
+                decFrac += curNumValue * Math.Pow(notationFrom, -(i + 1));
+            }
+
+            return decFrac.ToString();
+        }
+
+        private static string ConvertFrac(string frac, int notationFrom, int notationTo, int m)
+        {
+            string decFrac = ConvertFracOtherToDec(frac, notationFrom);
+            string resFrac = ConvertFracDecToOther(decFrac, notationTo, m);
+            return resFrac;
+        }
+
+        private static string ResultJoin(bool isNeg, string whole, string frac)
+        {
+            if (frac != "")
+            {
+                return $"{(isNeg ? "-" : "")}" + whole + "," + frac;
+            }
+            else
+            {
+                return $"{(isNeg ? "-" : "")}" + whole;
+            }
+        }
+
+        private static (string, string) GetWholeAndFrac(string n)
+        {
+            n = n.Replace('.', ',');
+            string[] splitNum = n.Contains(',') ? n.Split(',') : [n];//разделяем начальное число на целую и дробную части
+
+            string whole = splitNum[0];//целая часть
+            string frac = splitNum.Length > 1 ? splitNum[1] : ""; //дробная часть, проверяем если вообще есть
+
+            return (whole, frac);
+        }
+
         /// <summary>
         /// Метод связывающий методы перевода в десятичную из иной и из иной в десятичную
         /// Создан для более удобной связи с интерфейсом
@@ -288,21 +128,28 @@ namespace ClassLibrary
         /// <param name="outBase">конечная система счисления в которую переводим</param>
         /// <param name="m">точность, количество знаков после запятой</param>
         /// <returns>возвращает число в конечной системе счисления, тип данных - строка</returns>
-        public static string MainTranslate(string n, string nBase, string outBase, string m)
+        public static string MainTranslate(string n, int notationFrom, int notationTo, string m)
         {
             // если точность не указана, установить стандартное знаение округления 3
             if (m == "") m = "3";
 
-            ErrorDispatcher(n, nBase, outBase, m);
+            bool isNegative = false;
 
-            int notationFrom = int.Parse(nBase);
-            int notationTo = int.Parse(outBase);
             int accuracy = int.Parse(m);
 
-            string nDec = ConvertOtherToDec(n, notationFrom, accuracy);//переводим из начальной сс в десятеричную
-            string nOther = ConvertDecToOther(nDec, notationTo, accuracy);//переводим из десятеричной в иную сс
+            if (n.Contains('-'))
+            {
+                isNegative = true;
+                n = n.Replace("-", "");
+            }
 
-            return nOther;
+            (string whole, string frac) = GetWholeAndFrac(n);
+
+            string outWhole = ConvertWhole(whole, notationFrom, notationTo);
+            string outFrac = ConvertFrac(frac, notationFrom, notationTo, accuracy);
+            string result = ResultJoin(isNegative, outWhole, outFrac);
+
+            return result;
         }
     }
 }
