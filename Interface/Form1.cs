@@ -49,8 +49,6 @@ namespace Interface
                 throw new Exception(invalidNotationFromValueEx);
             }
 
-            char notationFromUC = digits[int.Parse(notationFrom)]; // Перевод изначальной системы счисления в Unicode
-
             if (notationTo == "")
                 throw new Exception(noNotationToInputEx);
 
