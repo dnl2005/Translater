@@ -8,6 +8,8 @@ namespace Interface
         }
 
         private static readonly string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//Алфавит
+
+        // перечень ошибок при работе программы
         public static readonly string noNotationFromInputEx = "Значение исходной системы счисления не было введено. См. справку";
         public static readonly string invalidNotationFromInputEx = "Введены недопустимые символы в исходной системе счисления. См. справку";
         public static readonly string invalidNotationFromValueEx = "Введено неверное значение в исходной системе счисления. См. справку";
@@ -20,7 +22,6 @@ namespace Interface
         public static readonly string invalidNumberInputEx = "Введены недопустимые значения в числе для перевода. См. справку";
         public static readonly string digitOutOfNotationToEx = "В выбранном числе присутствуют цифры вне выбранной исходной системы счисления. См. справку";
         public static readonly string notZero = "Число не должно начинаться с нуля. См. справку";
-        private static string acc;
 
         /// <summary> 
         /// Проверяет корректность введённых значений оснований систем счисления.  
@@ -40,14 +41,10 @@ namespace Interface
                 throw new Exception(noNotationFromInputEx);
 
             if (!int.TryParse(notationFrom, out int result))
-            {
                 throw new Exception(invalidNotationFromInputEx);
-            }
 
             if (int.Parse(notationFrom) < 2 || int.Parse(notationFrom) > 36)
-            {
                 throw new Exception(invalidNotationFromValueEx);
-            }
 
             char notationFromUC = digits[int.Parse(notationFrom)]; // Перевод изначальной системы счисления в Unicode
 
@@ -55,14 +52,10 @@ namespace Interface
                 throw new Exception(noNotationToInputEx);
 
             if (!int.TryParse(notationTo, out result))
-            {
                 throw new Exception(invalidNotationToInputEx);
-            }
 
             if (int.Parse(notationTo) < 2 || int.Parse(notationTo) > 36)
-            {
                 throw new Exception(invalidNotationToValueEx);
-            }
         }
 
 
@@ -71,23 +64,15 @@ namespace Interface
         /// </summary>
         /// <param name="accuracy">Строковое представление точности для дробной части числа.</param>
         /// <exception cref="Exception">Выбрасывается, если значение точности не является числом или выходит за допустимый диапазон (1–10).</exception>
-        private static void ExceptionAccuracy(string accuracy)
+        private static void ExceptionAccuracy(string acc)
         {
-            if (accuracy != "")
-            {
-                if (!int.TryParse(accuracy, out int result))
-                {
-                    throw new Exception(invalidAccuracyInputEx);
-                }
-                if (int.Parse(accuracy) < 1 || int.Parse(accuracy) > 10)
-                {
-                    throw new Exception(invalidAccuracyValueEx);
-                }
-            }
-            else
-            {
-                acc = "3";
-            }
+            if (acc == "") return;
+
+            if (!int.TryParse(acc, out int result))
+                throw new Exception(invalidAccuracyInputEx);
+
+            if (int.Parse(acc) < 1 || int.Parse(acc) > 10)
+                throw new Exception(invalidAccuracyValueEx);
         }
 
         /// <summary> 
@@ -109,16 +94,10 @@ namespace Interface
                 throw new Exception(noNumberInputEx);
 
             if (number[0] == '-')
-            {
                 if (number[1] == '0')
-                {
                     throw new Exception(notZero);
-                }
-            }
-            else if (number[0] == '0')
-            {
-                throw new Exception(notZero);
-            }
+                else if (number[0] == '0')
+                    throw new Exception(notZero);
 
             if (number[1..].Count(c => c == '-') > 0 || number.Count(c => c == ',') > 1)
                 throw new Exception(invalidNumberInputEx);
@@ -144,12 +123,17 @@ namespace Interface
                 ExceptionNumber(numbre.Text.ToUpper(), baseToChange.Text);
                 ExceptionAccuracy(accuracy.Text);
 
-                resultNumbre.Text = ClassLibrary.Translater.MainTranslate(numbre.Text.ToUpper(), int.Parse(baseToChange.Text), int.Parse(changedBase.Text), acc);
+                string number = numbre.Text.ToUpper();
+                int baseFrom = int.Parse(baseToChange.Text);
+                int baseTo = int.Parse(changedBase.Text);
+                int acc = accuracy.Text != "" ? int.Parse(accuracy.Text) : 3;
+
+                resultNumbre.Text = ClassLibrary.Translater.MainTranslate(number, baseFrom, baseTo, acc);
             }
             catch (Exception exit) //в случае ошибки всплывает окно с информацией об ошибке
             {
                 MessageBox.Show(exit.Message);
-            };
+            }
         }
 
         private void OpenTermOfUse_Click(object sender, EventArgs e)

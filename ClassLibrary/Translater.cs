@@ -44,7 +44,7 @@ namespace ClassLibrary
             string fracNew = "";
             double frac = double.Parse(fract);
 
-            while (frac > 0)
+            for (int i = 0; i < m + 1 && frac > 0; i++)
             {
                 frac *= notationTo;//домножаем на новое основание сс
                 int intPart = (int)frac;//берем целую часть
@@ -128,14 +128,9 @@ namespace ClassLibrary
         /// <param name="outBase">конечная система счисления в которую переводим</param>
         /// <param name="m">точность, количество знаков после запятой</param>
         /// <returns>возвращает число в конечной системе счисления, тип данных - строка</returns>
-        public static string MainTranslate(string n, int notationFrom, int notationTo, string m)
+        public static string MainTranslate(string n, int notationFrom, int notationTo, int accuracy = 3)
         {
-            // если точность не указана, установить стандартное знаение округления 3
-            if (m == "") m = "3";
-
             bool isNegative = false;
-
-            int accuracy = int.Parse(m);
 
             if (n.Contains('-'))
             {
