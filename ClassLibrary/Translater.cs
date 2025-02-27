@@ -17,9 +17,6 @@ namespace ClassLibrary
         /// <returns>  возвращает число в конечной системе счисления, тип данных - строка  </returns>
         public static string MainTranslate(string n, int notationFrom, int notationTo, int accuracy) 
         {
-            // если точность не указана, установить стандартное знаение округления 3
-            if (accuracy == 0) accuracy = 3;
-
             bool isNegative = false;
 
             if (n.Contains('-'))
