@@ -118,6 +118,12 @@ namespace ClassLibrary
             string resFrac = ConvertFracDecToOther(decFrac, notationTo, accuracy);
             return resFrac;
         }
+        /// <summary>
+        /// Метод для перевода дробной части числа в десятичную систему счисления.
+        /// </summary>
+        /// <param name="frac">Дробная часть числа, строка.</param>
+        /// <param name="notationFrom">Исходная система счисления, целое число.</param>
+        /// <returns>Возвращает дробную часть числа в десятичной системе счисления, строка.</returns>
         private static string ConvertFracOtherToDec(string frac, int notationFrom)
         {
             double decFrac = 0;
@@ -131,6 +137,13 @@ namespace ClassLibrary
             return decFrac.ToString();
         }
 
+        /// <summary>
+        /// Метод для перевода дробной части числа из десятичной системы в конечную систему счисления.
+        /// </summary>
+        /// <param name="fract">Дробная часть числа в десятичной системе счисления, строка.</param>
+        /// <param name="notationTo">Основание конечной системы счисления, целое число.</param>
+        /// <param name="m">Точность вычислений, количество знаков после запятой, целое число.</param>
+        /// <returns>Возвращает дробную часть числа в конечной системе счисления, строка.</returns>
         private static string ConvertFracDecToOther(string fract, int notationTo, int m)
         {
             string fracNew = "";
@@ -138,9 +151,9 @@ namespace ClassLibrary
 
             while (frac > 0)
             {
-                frac *= notationTo;//домножаем на новое основание сс
-                int intPart = (int)frac;//берем целую часть
-                fracNew += digits[intPart]; // Взять целую часть и перевести её в новую сс
+                frac *= notationTo; // Домножаем на новое основание системы счисления
+                int intPart = (int)frac; // Берем целую часть
+                fracNew += digits[intPart]; // Переводим целую часть в новую систему счисления
                 frac -= intPart; // Убираем целую часть
             }
 
@@ -148,24 +161,37 @@ namespace ClassLibrary
 
             return fracNew;
         }
+
+        /// <summary>
+        /// Метод для округления дробной части числа в конечной системе счисления.
+        /// </summary>
+        /// <param name="fracNew">Дробная часть числа, строка.</param>
+        /// <param name="newBase">Основание конечной системы счисления, целое число.</param>
+        /// <param name="m">Точность вычислений, количество знаков после запятой, целое число.</param>
+        /// <returns>Возвращает округленную дробную часть числа, строка.</returns>
         private static string FracRoundOther(string fracNew, int newBase, int m)
         {
-            if (fracNew.Length > m)//Округленике в любой сс. Смотрим, чтобы вообще надо было округлять
+            if (fracNew.Length > m) // Проверяем, нужно ли округлять
             {
-                char lastDigit = fracNew[m];//Находим цифру после той, до которой мы округляем
-                fracNew = fracNew[..m];//Отрезаем незначащую часть
-                char roundDigit = fracNew[^1];//находи последнюю цифру
-                if (digits.IndexOf(lastDigit) >= newBase / 2)//Если значение цифры после той, до которой мы округляем
-                                                             //больше половины основания системы счисления,
-                                                             //мы округляем в большую сторону
+                char lastDigit = fracNew[m]; // Находим цифру после той, до которой округляем
+                fracNew = fracNew[..m]; // Отрезаем незначащую часть
+                char roundDigit = fracNew[^1]; // Находим последнюю цифру
+                if (digits.IndexOf(lastDigit) >= newBase / 2) // Если цифра после округляемой больше или равна половине основания
                 {
-                    roundDigit = digits[Math.Clamp(digits.IndexOf(roundDigit) + 1, 0, newBase - 1)];
+                    roundDigit = digits[Math.Clamp(digits.IndexOf(roundDigit) + 1, 0, newBase - 1)]; // Округляем в большую сторону
                 }
-                fracNew = fracNew[..^1] + roundDigit;//собираем дробную часть обратно
+                fracNew = fracNew[..^1] + roundDigit; // Собираем дробную часть обратно
             }
             return fracNew;
         }
 
+        /// <summary>
+        /// Метод для объединения целой и дробной частей числа в конечный результат.
+        /// </summary>
+        /// <param name="isNeg">Флаг, указывающий на отрицательность числа, булевое значение.</param>
+        /// <param name="whole">Целая часть числа, строка.</param>
+        /// <param name="frac">Дробная часть числа, строка.</param>
+        /// <returns>Возвращает число в конечной системе счисления, строка.</returns>
         private static string ResultJoin(bool isNeg, string whole, string frac)
         {
             if (frac != "")
