@@ -1,5 +1,5 @@
-﻿//using Interface;  // Для доступа к классу Translater (UI)
-using ClassLibrary; // Для доступа к методу MainTranslate
+﻿//using Interface;  
+using ClassLibrary; 
 
 // Класс для тестирования корректной работы перевода чисел.
 namespace TranslaterUnitTests
