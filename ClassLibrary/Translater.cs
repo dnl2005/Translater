@@ -149,7 +149,7 @@ namespace ClassLibrary
             string fracNew = "";
             double frac = double.Parse(fract);
 
-            while (frac > 0)
+            for (int i = 0; i < fract.Length; i++)
             {
                 frac *= notationTo; // Домножаем на новое основание системы счисления
                 int intPart = (int)frac; // Берем целую часть
