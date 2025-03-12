@@ -102,13 +102,13 @@ namespace Interface
             if (number[1..].Count(c => c == '-') > 0 || number.Count(c => c == ',') > 1)
                 throw new Exception(invalidNumberInputEx);
 
-            char notationFromUC = digits[int.Parse(notationFrom)];
+            char notationFromUC = digits[int.Parse(notationFrom)-1];
             for (int i = 0; i < number.Length; i++)
             {
                 if (!digits.Contains(number[i]) && number[i] != '-' && number[i] != ',')
                     throw new Exception(invalidNumberInputEx);
 
-                if (number[i] >= notationFromUC)
+                if (number[i] > notationFromUC)
                     throw new Exception(digitOutOfNotationToEx);
             }
         }
