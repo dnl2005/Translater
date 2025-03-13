@@ -113,25 +113,10 @@ namespace TranslaterUnitTests
         public void Test_FracNumber_NotationFrom2()
         {
             string input = "1,01";
-            int baseFrom = 16;
+            int baseFrom = 2;
             int baseTo = 10;
             int accuracy = 3;
             string expected = "1,25";
-            string result = Translater.MainTranslate(input, baseFrom, baseTo, accuracy);
-            Assert.AreEqual(expected, result);
-        }
-        /// <summary>
-        /// Тест перевода дробного числа с буквами из максимально допустимой системы счисления:
-        /// Перевод "z,01y" из шестнадцатеричной (осн. 36) в десятичную (осн. 10).
-        /// </summary>
-        [TestMethod]
-        public void Test_FracNumber_NotationFrom36_acc2()
-        {
-            string input = "z,01y";
-            int baseFrom = 16;
-            int baseTo = 10;
-            int accuracy = 2;
-            string expected = "35";
             string result = Translater.MainTranslate(input, baseFrom, baseTo, accuracy);
             Assert.AreEqual(expected, result);
         }

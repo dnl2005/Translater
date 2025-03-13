@@ -116,7 +116,7 @@ namespace ClassLibrary
         {
             string decFrac = ConvertFracOtherToDec(frac, notationFrom);
             string resFrac = ConvertFracDecToOther(decFrac, notationTo, accuracy);
-            return resFrac;
+            return resFrac.TrimEnd('0');
         }
         /// <summary>
         /// Метод для перевода дробной части числа в десятичную систему счисления.
