@@ -35,11 +35,11 @@
             // 
             label1.AutoEllipsis = true;
             label1.AutoSize = true;
-            label1.Font = new Font("Lucida Bright", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Lucida Bright", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.Location = new Point(12, 191);
-            label1.MaximumSize = new Size(1000, 1000);
+            label1.MaximumSize = new Size(1000, 1100);
             label1.Name = "label1";
-            label1.Size = new Size(94, 32);
+            label1.Size = new Size(116, 39);
             label1.TabIndex = 0;
             label1.Text = "label1";
             label1.TextAlign = ContentAlignment.MiddleCenter;
@@ -51,7 +51,7 @@
             AutoSize = true;
             ClientSize = new Size(797, 453);
             Controls.Add(label1);
-            MaximumSize = new Size(1080, 1080);
+            MaximumSize = new Size(1080, 1200);
             MinimumSize = new Size(815, 500);
             Name = "ErrorMsg";
             StartPosition = FormStartPosition.CenterScreen;
