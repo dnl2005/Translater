@@ -131,7 +131,8 @@ namespace Interface
             }
             catch (Exception exit) //в случае ошибки всплывает окно с информацией об ошибке
             {
-                MessageBox.Show(exit.Message);
+                //MessageBox.Show(exit.Message);
+                ShowError(exit.Message);
             }
         }
 
@@ -139,6 +140,11 @@ namespace Interface
         {
             TermsOfUse f2 = new TermsOfUse();
             f2.ShowDialog();
+        }
+        private void ShowError(string err)
+        {
+            ErrorMsg f3 = new ErrorMsg(err);      
+            f3.ShowDialog();
         }
     }
 }
