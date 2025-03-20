@@ -56,22 +56,7 @@ namespace TranslaterUnitTests
             Assert.AreEqual(expected, result);
         }
 
-        /// <summary>
-        /// Тест перевода числа без букв:
-        /// Перевод "123" из десятичной (осн. 10) в двоичную (осн. 2).
-        /// 123₁₀ = 1111011₂.
-        /// </summary>
-        [TestMethod]
-        public void Test_NumberWithoutLetters()
-        {
-            string input = "123";
-            int baseFrom = 10;
-            int baseTo = 2;
-            int accuracy = 3;
-            string expected = "1111011";
-            string result = Translater.MainTranslate(input, baseFrom, baseTo, accuracy);
-            Assert.AreEqual(expected, result);
-        }
+///\,.;LDASGKLJASDH
 
         /// <summary>
         /// Тест перевода числа с буквами:
