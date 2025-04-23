@@ -15,7 +15,7 @@ namespace ClassLibrary
         /// <param name="notationTo">  конечная система счисления, в которую переводим, цел. число  </param>
         /// <param name="accuracy">  точность, количество знаков после запятой, цел. число  </param>
         /// <returns>  возвращает число в конечной системе счисления, тип данных - строка  </returns>
-        public static string MainTranslate(string n, int notationFrom, int notationTo, int accuracy)
+        public static string MainTranslate(string n, int notationFrom, int notationTo, int accuracy) 
         {
             bool isNegative = false;
 
@@ -33,7 +33,7 @@ namespace ClassLibrary
 
             return result;
         }
-
+       
         /// <summary>
         /// Метод для разделения числа на дробную и целую части
         /// Создан для упрощения переводов в MainTranslate
@@ -116,7 +116,6 @@ namespace ClassLibrary
         {
             string decFrac = ConvertFracOtherToDec(frac, notationFrom);
             string resFrac = ConvertFracDecToOther(decFrac, notationTo, accuracy);
-
             return resFrac.TrimEnd('0');
         }
         /// <summary>
@@ -183,7 +182,6 @@ namespace ClassLibrary
                 }
                 fracNew = fracNew[..^1] + roundDigit; // Собираем дробную часть обратно
             }
-
             return fracNew;
         }
 

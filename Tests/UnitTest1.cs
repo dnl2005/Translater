@@ -1,7 +1,4 @@
-﻿//using Interface;  
-using ClassLibrary; 
-
-// Класс для тестирования корректной работы перевода чисел.
+﻿using ClassLibrary; 
 namespace TranslaterUnitTests
 {
     [TestClass]
@@ -19,8 +16,9 @@ namespace TranslaterUnitTests
             int baseFrom = 16;
             int baseTo = 10;
             int accuracy = 3;
+            string expected = "-10";
             string result = Translater.MainTranslate(input, baseFrom, baseTo, accuracy);
-            Assert.AreEqual("-10", result);
+            Assert.AreEqual(expected, result);
         }
 
         /// <summary>
@@ -36,8 +34,9 @@ namespace TranslaterUnitTests
             int baseFrom = 10;
             int baseTo = 2;
             int accuracy = 2;
+            string expected = "1010,01";
             string result = Translater.MainTranslate(input, baseFrom, baseTo, accuracy);
-            Assert.AreEqual("1010,01", result);
+            Assert.AreEqual(expected, result);
         }
 
         /// <summary>
@@ -52,8 +51,9 @@ namespace TranslaterUnitTests
             int baseFrom = 2;
             int baseTo = 10;
             int accuracy = 3;
+            string expected = "5";
             string result = Translater.MainTranslate(input, baseFrom, baseTo, accuracy);
-            Assert.AreEqual("5", result);
+            Assert.AreEqual(expected, result);
         }
 
         /// <summary>
@@ -68,8 +68,9 @@ namespace TranslaterUnitTests
             int baseFrom = 10;
             int baseTo = 2;
             int accuracy = 3;
+            string expected = "1111011";
             string result = Translater.MainTranslate(input, baseFrom, baseTo, accuracy);
-            Assert.AreEqual("1111011", result);
+            Assert.AreEqual(expected, result);
         }
 
         /// <summary>
@@ -84,8 +85,40 @@ namespace TranslaterUnitTests
             int baseFrom = 16;
             int baseTo = 10;
             int accuracy = 3;
+            string expected = "419";
             string result = Translater.MainTranslate(input, baseFrom, baseTo, accuracy);
-            Assert.AreEqual("419", result);
+            Assert.AreEqual(expected, result);
+        }
+        /// <summary>
+        /// Тест перевода числа с буквами:
+        /// Перевод "1A3" из шестнадцатеричной (осн. 16) в десятичную (осн. 10).
+        /// 1A3₁₆ = 1*256 + 10*16 + 3 = 419.
+        /// </summary>
+        [TestMethod]
+        public void Test_FractionNumber_WithLetters()
+        {
+            string input = "1A,3";
+            int baseFrom = 16;
+            int baseTo = 10;
+            int accuracy = 3;
+            string expected = "26,188";
+            string result = Translater.MainTranslate(input, baseFrom, baseTo, accuracy);
+            Assert.AreEqual(expected, result);
+        }
+        /// <summary>
+        /// Тест перевода дробного числа минимальной системы счисления с буквами:
+        /// Перевод "1,01" из шестнадцатеричной (осн. 2) в десятичную (осн. 10).
+        /// </summary>
+        [TestMethod]
+        public void Test_FracNumber_NotationFrom2()
+        {
+            string input = "1,01";
+            int baseFrom = 2;
+            int baseTo = 10;
+            int accuracy = 3;
+            string expected = "1,25";
+            string result = Translater.MainTranslate(input, baseFrom, baseTo, accuracy);
+            Assert.AreEqual(expected, result);
         }
     }
 }
